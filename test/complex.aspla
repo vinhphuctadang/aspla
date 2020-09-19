@@ -1,0 +1,8 @@
+log "-------- START HELLO WORLD PROGRAM -------------------------"
+a <- [ 1 2 3 4 5 ]
+log (sum a)
+a[*] <- a[*] * 2
+log a
+a <- a * 2
+log a
+log "-------- COMPLETE HELLO WORLD PROGRAM WITH ASPLA -----------"

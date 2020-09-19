@@ -62,7 +62,7 @@ def evaluate(parsed):
         return
     
     value = variables.get(operator, None) 
-    if value != None:
+    if value != None:   
         return value
 
 def exec(s):
@@ -70,5 +70,5 @@ def exec(s):
 
 exec('<- x 102.0')
 exec('log x')
-exec('log ( + x 5 )')
+exec('log ( + x ( + ( * x 3 ) 5 ) )')
 exec('log SELF')

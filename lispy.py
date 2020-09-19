@@ -1,4 +1,4 @@
-
+import log
 # all public variables
 variables = {
     'SELF': __file__

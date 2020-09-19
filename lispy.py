@@ -1,10 +1,11 @@
 
 # all public variables
-variables = {}
+variables = {
+    'SELF': __file__
+}
 
 def tokenize(s):
     return s.replace('(', '( ').replace(')', ' )').split()
-
 
 # no error tracing !!!
 def read_from_token(tokenized):
@@ -21,11 +22,21 @@ def read_from_token(tokenized):
             stack[-1].append(token)
     return stack[0]
 
+def isFloat(x):
+    try: 
+        float(x)
+        return True 
+    except:
+        return False
+
 def evaluate(parsed):
-    # print(parsed)
-    operator = parsed[0]
-    if parsed[0].isdigit():
-        return float(parsed[0])
+
+    if type(parsed) == type([]): # isList ?
+        operator = parsed[0]
+    elif not isFloat(parsed): # is operand
+        operator = parsed
+    else:
+        return float(parsed) # real value
 
     if operator == '+':
         return evaluate(parsed[1]) + evaluate(parsed[2])
@@ -39,8 +50,25 @@ def evaluate(parsed):
     if operator == '/':
         return evaluate(parsed[1]) / evaluate(parsed[2])
 
-input = '- 3 ( + 1 ( * 5 ( + 2 7 ) ) )' # 3 - ( 1 +  5 * (2 + 7) ) = -43
-parsed = read_from_token(tokenize(input))
-evaluated = evaluate(parsed)
+    if operator == '<-':
+        variables[ parsed[1] ] = evaluate(parsed[2])
+        return variables[parsed[1]]
 
-print(evaluated)
+    if operator == 'log':
+        for param in parsed[1:]:
+            x = evaluate(param)
+            print(x, end=' ')
+        print()
+        return
+    
+    value = variables.get(operator, None) 
+    if value != None:
+        return value
+
+def exec(s):
+    evaluate(read_from_token(tokenize(s)))  
+
+exec('<- x 102.0')
+exec('log x')
+exec('log ( + x 5 )')
+exec('log SELF')

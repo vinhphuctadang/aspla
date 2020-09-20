@@ -1,0 +1,8 @@
+
+& paint 
+    // repaint screen here
+~
+
+a = [ hello world ]
+// do something as init here
+
